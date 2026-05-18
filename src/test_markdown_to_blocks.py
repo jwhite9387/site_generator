@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_to_blocks import markdown_to_blocks
+from markdown_to_blocks import *
 
 
 class TestMarkdownToBlocks(unittest.TestCase):
@@ -48,3 +48,46 @@ Empty block above
                 "Empty block above"
             ],
         )
+
+    def test_block_to_block_heading(self):
+        block1 = "# This is a heading"
+        block2 = "## This is a heading"
+        block3 = "###This is a paragraph"
+        blocks = [block1, block2, block3]
+        block_types = []
+        for block in blocks:
+            block_types.append(block_to_block_type(block))
+
+        self.assertListEqual([BlockType.HEADING, BlockType.HEADING, BlockType.PARAGRAPH], block_types)
+
+    def test_block_to_block_code(self):
+        block = """```
+        This is a block of code
+        ```"""
+        self.assertEqual(block_to_block_type(block), BlockType.CODE)
+
+    def test_block_to_block_quote(self):
+        block1 = ">This is a block of quote"
+        block2 = "> This is a block of quote"
+        block3 = """>
+        This is a block of quote
+        """
+        
+        blocks = [block1, block2, block3]
+        block_types = []
+        for block in blocks:
+            block_types.append(block_to_block_type(block))
+
+        self.assertListEqual([BlockType.QUOTE, BlockType.QUOTE, BlockType.PARAGRAPH], block_types)
+
+    def test_block_to_block_ulist(self):
+        block = "- first item" \
+        "- second item" \
+        "- third item"
+        self.assertEqual(block_to_block_type(block), BlockType.ULIST)
+
+    def test_block_to_block_olist(self):
+        block = "1. first item" \
+        "2. second item" \
+        "3. third item"
+        self.assertEqual(block_to_block_type(block), BlockType.OLIST)
