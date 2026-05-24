@@ -3,6 +3,7 @@ import os
 
 from textnode import TextType, TextNode
 from htmlnode import HTMLNode
+from gencontent import *
 
 def main():
     text_node = TextNode("some text", TextType.LINK, "https://example.com")
@@ -10,6 +11,8 @@ def main():
     html_node = HTMLNode("a", "paragraph text", [], {"href": "https://google.com", "target": "_blank"})
     print(html_node)
     prep_and_copy("static", "public")
+    generate_page("content/index.md", "template.html", "public/index.html")
+    
     
 def copy_content(src, dest):
     for name in os.listdir(src):
