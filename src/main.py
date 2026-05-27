@@ -1,5 +1,6 @@
 import shutil
 import os
+import sys
 
 from textnode import TextType, TextNode
 from htmlnode import HTMLNode
@@ -10,8 +11,9 @@ def main():
     print(text_node)
     html_node = HTMLNode("a", "paragraph text", [], {"href": "https://google.com", "target": "_blank"})
     print(html_node)
-    prep_and_copy("static", "public")
-    generate_pages_recursive("content", "template.html", "public")
+    basepath = sys.argv[1] if len(sys.argv) > 1 else '/'
+    prep_and_copy("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
     
     
 def copy_content(src, dest):
