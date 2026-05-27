@@ -11,7 +11,7 @@ def main():
     html_node = HTMLNode("a", "paragraph text", [], {"href": "https://google.com", "target": "_blank"})
     print(html_node)
     prep_and_copy("static", "public")
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
     
     
 def copy_content(src, dest):
