@@ -99,3 +99,8 @@ the **same** even with inline stuff
             html,
             "<div><ol><li>This is an</li><li><i>ordered</i> list of</li><li><b>items</b></li></ol></div>",
         )
+
+    def test_html_is_escaped(self):
+        md = "Use <script>alert(1)</script> carefully"
+        html = markdown_to_html_node(md).to_html()
+        self.assertNotIn("<script>", html)

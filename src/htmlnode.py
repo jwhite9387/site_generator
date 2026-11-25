@@ -1,4 +1,5 @@
 from textnode import TextType
+from html import escape
 
 
 class HTMLNode:
@@ -14,9 +15,9 @@ class HTMLNode:
         raise NotImplementedError
     
     def props_to_html(self):
-        if (self.props == None) or (self.props == {}):
+        if not self.props:
             return ""
-        return "".join(f' {k}="{v}"' for k, v in self.props.items())
+        return "".join(f' {k}="{escape(str(v), quote=True)}"' for k, v in self.props.items())
     
     def __repr__(self):
         return f"HTMLNode({self.tag!r}, {self.value!r}, {self.children}, {self.props})"
@@ -27,11 +28,10 @@ class LeafNode(HTMLNode):
         super().__init__(tag, value, None, props)
 
     def to_html(self):
-        if self.value == None:
-            raise ValueError("All leaf nodes must have a value")
-        if self.tag == None:
-            return self.value
-        return(f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>")
+        value = escape(self.value, quote=False)
+        if self.tag is None:
+            return value
+        return(f"<{self.tag}{self.props_to_html()}>{value}</{self.tag}>")
     
     def __repr__(self):
         return f"HTMLNode({self.tag!r}, {self.value!r}, {self.props})"

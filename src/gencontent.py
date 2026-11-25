@@ -25,7 +25,7 @@ def generate_page(from_path, template_path, dest_path, basepath):
     from_html_node = markdown_to_html_node(from_contents)
     from_html_string = from_html_node.to_html()
 
-    title = extract_title(from_contents)
+    title = escape(extract_title(from_contents), quote=False)
     
     full_page = template_contents.replace("{{ Title }}", title).replace("{{ Content }}", from_html_string)
     full_page = full_page.replace('href="/', f'href="{basepath}').replace('src="/', f'src="{basepath}')

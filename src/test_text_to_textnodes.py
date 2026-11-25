@@ -24,3 +24,14 @@ class TestTextToTextnodes(unittest.TestCase):
             ],
             text_nodes,
         )
+
+    def test_underscore_inside_code_span(self):
+        nodes = text_to_textnodes("Use `snake_case_name` here")
+        self.assertListEqual(
+            nodes,
+            [
+                TextNode("Use ", TextType.TEXT),
+                TextNode("snake_case_name", TextType.CODE),
+                TextNode(" here", TextType.TEXT),
+            ],
+        )
