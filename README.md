@@ -26,7 +26,7 @@ Built as part of the [Boot.dev](https://www.boot.dev) backend curriculum, then e
 
 ## Usage
 
-Requires Python 3.[X]. No packages to install.
+Requires Python 3.12+ No packages to install.
 
 ```bash
 ./build.sh   # build for deployment (base path /site_generator/)
